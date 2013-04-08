@@ -20,10 +20,10 @@ public class Student extends Model {
   public String email;
   
   @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
-  List<Offer> offers = new ArrayList<>();
+  public List<Offer> offers = new ArrayList<>();
   
   @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
-  List<Request> requests = new ArrayList<>();
+  public List<Request> requests = new ArrayList<>();
   
   public Student(String firstName, String lastName, String email) {
     this.firstName = firstName;
