@@ -32,18 +32,16 @@ public class ModelTest {
   @Test
   public void testModel() {
     // Create a book to be used in subsequent requests
-    Book book = new Book("name", "condition", "isbn", 1L);
+    Book book = new Book("Book-01", "name", "condition", "isbn", 1L);
     
     // Associate the book with an Offer and a Request
-    Offer offer = new Offer("name", "condition", 1L);
-    Request request = new Request("name", "condition", 1L);
-    offer.book = book;
-    request.books.add(book);
+    Offer offer = new Offer("Offer-01", book);
+    Request request = new Request("Request-01", book);
     book.offer = offer;
-    book.requests.add(request);
+    book.request = request;
     
     // Associate the Request and the Offer with a Student
-    Student student = new Student("firstName", "lastName", "email");
+    Student student = new Student("Student-01", "firstName", "lastName", "email");
     student.offers.add(offer);
     student.requests.add(request);
     offer.student = student;
@@ -74,8 +72,8 @@ public class ModelTest {
     assertEquals("Request-Student", requests.get(0).student, students.get(0));
     assertEquals("Offer-Book", offers.get(0).book, books.get(0));
     assertEquals("Book-Offer", books.get(0).offer, offers.get(0));
-    assertEquals("Request-Book", requests.get(0).books.get(0), books.get(0));
-    assertEquals("Book-Request", books.get(0).requests.get(0), requests.get(0));
+    assertEquals("Request-Book", requests.get(0).book, books.get(0));
+    assertEquals("Book-Request", books.get(0).request, requests.get(0));
   }
 
 }
