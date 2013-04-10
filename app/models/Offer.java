@@ -14,7 +14,7 @@ public class Offer extends Model {
 
   @Id
   public Long privateKey;
-  
+
   @Required
   public String offerId;
   
