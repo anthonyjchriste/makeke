@@ -37,15 +37,15 @@ public class ModelTest {
     // Associate the book with an Offer and a Request
     Offer offer = new Offer("Offer-01", book);
     Request request = new Request("Request-01", book);
-    book.offer = offer;
-    book.request = request;
+    book.setOffer(offer);
+    book.setRequest(request);
     
     // Associate the Request and the Offer with a Student
     Student student = new Student("Student-01", "firstName", "lastName", "email");
-    student.offers.add(offer);
-    student.requests.add(request);
-    offer.student = student;
-    request.student = student;
+    student.getOffers().add(offer);
+    student.getRequests().add(request);
+    offer.setStudent(student);
+    request.setStudent(student);
     
     // Persist everything to the db
     student.save();
@@ -66,14 +66,14 @@ public class ModelTest {
     assertEquals("Checking books", books.size(), 1);
 
     // Check to make sure we've recovered all relationships
-    assertEquals("Student-Offer", students.get(0).offers.get(0), offers.get(0));
-    assertEquals("Offer-Student", offers.get(0).student, students.get(0));
-    assertEquals("Student-Request", students.get(0).requests.get(0), requests.get(0));
-    assertEquals("Request-Student", requests.get(0).student, students.get(0));
-    assertEquals("Offer-Book", offers.get(0).book, books.get(0));
-    assertEquals("Book-Offer", books.get(0).offer, offers.get(0));
-    assertEquals("Request-Book", requests.get(0).book, books.get(0));
-    assertEquals("Book-Request", books.get(0).request, requests.get(0));
+    assertEquals("Student-Offer", students.get(0).getOffers().get(0), offers.get(0));
+    assertEquals("Offer-Student", offers.get(0).getStudent(), students.get(0));
+    assertEquals("Student-Request", students.get(0).getRequests().get(0), requests.get(0));
+    assertEquals("Request-Student", requests.get(0).getStudent(), students.get(0));
+    assertEquals("Offer-Book", offers.get(0).getBook(), books.get(0));
+    assertEquals("Book-Offer", books.get(0).getOffer(), offers.get(0));
+    assertEquals("Request-Book", requests.get(0).getBook(), books.get(0));
+    assertEquals("Book-Request", books.get(0).getRequest(), requests.get(0));
   }
 
 }

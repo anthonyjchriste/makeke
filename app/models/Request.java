@@ -13,18 +13,18 @@ public class Request extends Model {
   private static final long serialVersionUID = -287973969048754947L;
 
   @Id
-  public Long primaryKey;
+  private Long primaryKey;
   
   @Required
-  public String requestId;
+  private String requestId;
   
   @Required
   @ManyToOne(cascade = CascadeType.ALL)
-  public Student student;
+  private Student student;
   
   @Required
   @OneToOne(cascade = CascadeType.ALL)
-  public Book book;
+  private Book book;
   
   public Request(String requestId, Book book) {
     this.requestId = requestId;
@@ -38,6 +38,38 @@ public class Request extends Model {
   @Override
   public String toString() {
     return String.format("[Request %s]", this.requestId);
+  }
+
+  public Long getPrimaryKey() {
+    return primaryKey;
+  }
+
+  public void setPrimaryKey(Long primaryKey) {
+    this.primaryKey = primaryKey;
+  }
+
+  public String getRequestId() {
+    return requestId;
+  }
+
+  public void setRequestId(String requestId) {
+    this.requestId = requestId;
+  }
+
+  public Student getStudent() {
+    return student;
+  }
+
+  public void setStudent(Student student) {
+    this.student = student;
+  }
+
+  public Book getBook() {
+    return book;
+  }
+
+  public void setBook(Book book) {
+    this.book = book;
   }
   
 }

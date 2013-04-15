@@ -15,25 +15,25 @@ public class Student extends Model {
   private static final long serialVersionUID = 3881518174354436477L;
 
   @Id
-  public Long primaryKey;
+  private Long primaryKey;
   
   @Required
-  public String studentId;
+  private String studentId;
   
   @Required
-  public String firstName;
+  private String firstName;
   
   @Required
-  public String lastName;
+  private String lastName;
   
   @Email
-  public String email;
+  private String email;
   
   @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
-  public List<Offer> offers = new ArrayList<>();
+  private List<Offer> offers = new ArrayList<>();
   
   @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
-  public List<Request> requests = new ArrayList<>();
+  private List<Request> requests = new ArrayList<>();
   
   public Student(String studentId, String firstName, String lastName, String email) {
     this.studentId = studentId;
@@ -51,5 +51,60 @@ public class Student extends Model {
     return String.format("[Student %s %s %s %s]", this.studentId, this.firstName, this.lastName,
         this.email);
   }
-  
+
+  public Long getPrimaryKey() {
+    return primaryKey;
+  }
+
+  public void setPrimaryKey(Long primaryKey) {
+    this.primaryKey = primaryKey;
+  }
+
+  public String getStudentId() {
+    return studentId;
+  }
+
+  public void setStudentId(String studentId) {
+    this.studentId = studentId;
+  }
+
+  public String getFirstName() {
+    return firstName;
+  }
+
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  public String getLastName() {
+    return lastName;
+  }
+
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public List<Offer> getOffers() {
+    return offers;
+  }
+
+  public void setOffers(List<Offer> offers) {
+    this.offers = offers;
+  }
+
+  public List<Request> getRequests() {
+    return requests;
+  }
+
+  public void setRequests(List<Request> requests) {
+    this.requests = requests;
+  }
 }

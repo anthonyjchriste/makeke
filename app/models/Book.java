@@ -12,22 +12,22 @@ public class Book extends Model {
   private static final long serialVersionUID = 4980072665954738235L;
 
   @Id
-  public Long primaryKey;
+  private Long primaryKey;
   
   @Required
-  public String bookId;
+  private String bookId;
   
   @OneToOne(mappedBy = "book", cascade = CascadeType.ALL)
-  public Request request;
+  private Request request;
   
   @OneToOne(mappedBy = "book", cascade = CascadeType.ALL)
-  public Offer offer;
+  private Offer offer;
   
-  public String name;
-  public String condition;
-  public String isbn;
-  public Long price;
-  
+  private String name;
+  private String condition;
+  private String isbn;
+  private Long price;
+
   public Book(String bookId, String name, String condition, String isbn, Long price) {
     this.bookId = bookId;
     this.name = name;
@@ -44,5 +44,69 @@ public class Book extends Model {
   public String toString() {
     return String.format("[Book %s %s %s %s %d]", this.bookId, this.name, this.condition,
         this.isbn, this.price);
+  }
+  
+  public Long getPrimaryKey() {
+    return primaryKey;
+  }
+
+  public void setPrimaryKey(Long primaryKey) {
+    this.primaryKey = primaryKey;
+  }
+
+  public String getBookId() {
+    return bookId;
+  }
+
+  public void setBookId(String bookId) {
+    this.bookId = bookId;
+  }
+
+  public Request getRequest() {
+    return request;
+  }
+
+  public void setRequest(Request request) {
+    this.request = request;
+  }
+
+  public Offer getOffer() {
+    return offer;
+  }
+
+  public void setOffer(Offer offer) {
+    this.offer = offer;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getCondition() {
+    return condition;
+  }
+
+  public void setCondition(String condition) {
+    this.condition = condition;
+  }
+
+  public String getIsbn() {
+    return isbn;
+  }
+
+  public void setIsbn(String isbn) {
+    this.isbn = isbn;
+  }
+
+  public Long getPrice() {
+    return price;
+  }
+
+  public void setPrice(Long price) {
+    this.price = price;
   }
 }
