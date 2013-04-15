@@ -14,6 +14,7 @@ public class Book extends Model {
   @Id
   public Long primaryKey;
   
+  
   @Required
   public String bookId;
   
