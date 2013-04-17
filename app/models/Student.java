@@ -1,11 +1,14 @@
 package models;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import play.data.format.Formatters;
 import play.data.validation.Constraints.Email;
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
@@ -40,6 +43,22 @@ public class Student extends Model {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
+    
+    Formatters.register(models.Student.class, new Formatters.SimpleFormatter<models.Student>() {
+      @Override
+      public models.Student parse(String text, Locale locale) throws ParseException {
+        models.Student student = models.Student.find().where().eq("studentId", text).findUnique();
+        if (student == null) {
+          throw new ParseException("Could not find matching Student", 0);
+        }
+        return student;
+      }
+
+      @Override
+      public String print(models.Student t, Locale locale) {
+        return t.getStudentId();
+      }
+    });
   }
   
   public static Finder<Long, Student> find() {

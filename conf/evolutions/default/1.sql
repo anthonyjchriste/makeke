@@ -14,11 +14,11 @@ create table book (
 ;
 
 create table offer (
-  private_key               bigint not null,
+  primary_key               bigint not null,
   offer_id                  varchar(255),
   student_primary_key       bigint,
   book_primary_key          bigint,
-  constraint pk_offer primary key (private_key))
+  constraint pk_offer primary key (primary_key))
 ;
 
 create table request (

@@ -1,9 +1,12 @@
 package models;
 
+import java.text.ParseException;
+import java.util.Locale;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import play.data.format.Formatters;
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 
@@ -35,6 +38,22 @@ public class Book extends Model {
     this.condition = condition;
     this.isbn= isbn;
     this.price = price;
+    
+    Formatters.register(models.Book.class, new Formatters.SimpleFormatter<models.Book>() {
+      @Override
+      public models.Book parse(String text, Locale locale) throws ParseException {
+        models.Book book = models.Book.find().where().eq("bookId", text).findUnique();
+        if (book == null) {
+          throw new ParseException("Could not find matching Warehouse", 0);
+        }
+        return book;
+      }
+
+      @Override
+      public String print(models.Book t, Locale locale) {
+        return t.getBookId();
+      }
+    });
   }
   
   public static Finder<Long, Book> find() {
