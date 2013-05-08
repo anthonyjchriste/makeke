@@ -5,7 +5,7 @@
 
 @makeRadio(value : String) = {
     @defining(bookForm.field("condition").value()) { selected =>
-        @if(selected.equals(value)) {
+        @if(selected != null && selected.equals(value)) {
             <label class="radio inline" for="radio">
                 <input type="radio" value="@value" name="condition" checked="true">
                 <span>@value</span> 

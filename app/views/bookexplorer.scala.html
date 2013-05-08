@@ -1,0 +1,86 @@
+@(books : List[models.Book])
+@main("Book Explorer") {
+
+<div class="row">
+    <div class="span3">
+        <form action="@routes.Book.filter()" method="post" class="well well-small" id="details-form">
+            <label>Filter Books</label> 
+            <input type="text" class="input-large" name="name" placeholder="Title">
+            <input type="text" class="input-large" placeholder="Edition"> <input type="text"
+                class="input-large" placeholder="ISBN">
+            <div class="input-prepend input-append">
+                <span class="add-on">$</span> <input type="text" class="input-medium"
+                    placeholder="Target Price"> <span class="add-on">.00</span>
+            </div>
+            <div class="control-group" id="conditionWell">
+                <label class="control-label">Condition</label>
+                <div class="controls">
+                    <label class="checkbox inline" for="checkbox"> <input type="checkbox"
+                        value="true" id="checkbox" name="checkbox"> <span>Good</span>
+                    </label> <label class="checkbox inline" for="checkbox"> <input type="checkbox"
+                        value="true" id="checkbox" name="checkbox"> <span>Fair</span>
+                    </label> <label class="checkbox inline" for="checkbox"> <input type="checkbox"
+                        value="true" id="checkbox" name="checkbox"> <span>Poor</span>
+                    </label>
+                </div>
+            </div>
+            <select>
+                <option>Offers and Requests</option>
+                <option>Offers</option>
+                <option>Requests</option>
+            </select>
+            <div class="control-group">
+                <div class="controls" id="form-buttons">             
+                    <input id="filter" type="submit" value="Filter" class="btn btn-primary pull-right">  
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="span9 scrolling-table">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Cover Image</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(book <- books) {
+                    <tr>
+                        <td class="cover">
+                            <img src="http://covers.openlibrary.org/b/isbn/@book.getIsbn()-M.jpg">
+                        </td>
+                        <td>
+                            @if(book.getRequest() == null) {
+                                <span class="label pull-left label-success">Offer</span>
+                            } else {
+                                <span class="label pull-left label-warning">Request</span>
+                            }
+                            <dl class="dl-horizontal">
+                                <dt>Title</dt>
+                                <dd>@book.getName()</dd>
+                                <dt>Edition</dt>
+                                <dd>@book.getEdition()</dd>
+                                <dt>ISBN</dt>
+                                <dd>@book.getIsbn()</dd>
+                                <dt>Target Price</dt>
+                                <dd>$@book.getPrice().00</dd>
+                                <dt>Condition</dt>
+                                <dd>@book.getCondition()</dd>
+                                <dt>Contact</dt>
+                                <dd>
+                                    @if(book.getRequest() == null) {
+                                        @book.getOffer().getStudent().toString()
+                                    } else {
+                                        @book.getRequest().getStudent().toString()
+                                    }
+                                </dd>
+                            </dl>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+}

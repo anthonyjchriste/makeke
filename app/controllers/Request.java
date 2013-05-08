@@ -5,6 +5,7 @@ import java.util.List;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import utils.User;
 import views.html.requestCreate;
 import views.html.requestEdit;
 import views.html.error;
@@ -22,12 +23,20 @@ public class Request extends Controller {
   }
 
   public static Result create() {
+    if(User.getStudent() == null) {
+      return ok(error.render("You must be logged in to do that.", "Please login or create an account."));
+    }
+    
     Form<models.Request> requestForm = form(models.Request.class);
     List<models.Book> books = models.Book.find().all();
     return ok(requestCreate.render(requestForm, books));
   }
 
   public static Result save() {
+    if(User.getStudent() == null) {
+      return ok(error.render("You must be logged in to do that.", "Please login or create an account."));
+    }
+    
     Form<models.Request> requestForm = form(models.Request.class).bindFromRequest();
     Form<models.Book> bookForm = form(models.Book.class).bindFromRequest();
 
@@ -54,6 +63,10 @@ public class Request extends Controller {
   }
   
   public static Result edit(Long primaryKey) {
+    if(User.getStudent() == null) {
+      return ok(error.render("You must be logged in to do that.", "Please login or create an account."));
+    }
+    
     models.Request request = models.Request.find().byId(primaryKey);
     Form<models.Request> requestForm = form(models.Request.class).fill(request);
     Form<models.Book> bookForm = form(models.Book.class).fill(request.getBook());
@@ -61,6 +74,10 @@ public class Request extends Controller {
   }
   
   public static Result update(Long primaryKey) {
+    if(User.getStudent() == null) {
+      return ok(error.render("You must be logged in to do that.", "Please login or create an account."));
+    }
+    
     Form<models.Request> requestForm = form(models.Request.class).bindFromRequest();
     Form<models.Book> bookForm = form(models.Book.class).bindFromRequest();
     
@@ -79,6 +96,10 @@ public class Request extends Controller {
   }
 
   public static Result delete(Long primaryKey) {
+    if(User.getStudent() == null) {
+      return ok(error.render("You must be logged in to do that.", "Please login or create an account."));
+    }
+    
     models.Request.find().byId(primaryKey).delete();
     return redirect(routes.RequestsAndOffers.index());
   }

@@ -67,6 +67,10 @@ td.smallCover {
     margin-left: 10px;  
 }
 
-
-
+/* --- Scrolling Tables --- */
+.scrolling-table {  
+    max-height: 440px !important;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
 

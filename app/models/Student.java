@@ -59,8 +59,7 @@ public class Student extends Model {
   
   @Override
   public String toString() {
-    return String.format("[Student %s %s %s %s]", this.studentId, this.firstName, this.lastName,
-        this.email);
+    return String.format("%s %s (%s)", this.getFirstName(), this.getLastName(), this.getEmail());
   }
 
   public Long getPrimaryKey() {

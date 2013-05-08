@@ -38,7 +38,8 @@ public class Student extends Controller {
     
     models.Student student = studentForm.get();
     student.save();
-    return redirect(routes.Application.index());
+    session("connected", student.getStudentId());
+    return redirect(routes.Book.index());
   }
   
   public static Result login() {
