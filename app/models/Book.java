@@ -30,30 +30,16 @@ public class Book extends Model {
   private String name;
   private String condition;
   private String isbn;
+  private String edition;
   private Long price;
 
-  public Book(String bookId, String name, String condition, String isbn, Long price) {
+  public Book(String bookId, String name, String edition, String condition, String isbn, Long price) {
     this.bookId = bookId;
     this.name = name;
+    this.edition = edition;
     this.condition = condition;
     this.isbn= isbn;
     this.price = price;
-    
-    Formatters.register(models.Book.class, new Formatters.SimpleFormatter<models.Book>() {
-      @Override
-      public models.Book parse(String text, Locale locale) throws ParseException {
-        models.Book book = models.Book.find().where().eq("bookId", text).findUnique();
-        if (book == null) {
-          throw new ParseException("Could not find matching Warehouse", 0);
-        }
-        return book;
-      }
-
-      @Override
-      public String print(models.Book t, Locale locale) {
-        return t.getBookId();
-      }
-    });
   }
   
   public static Finder<Long, Book> find() {
@@ -104,6 +90,14 @@ public class Book extends Model {
 
   public void setName(String name) {
     this.name = name;
+  }
+  
+  public String getEdition() {
+    return edition;
+  }
+  
+  public void setEdition(String edition) {
+    this.edition = edition;
   }
 
   public String getCondition() {

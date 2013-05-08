@@ -14,15 +14,14 @@ public class Offer extends Model {
 
   @Id
   private Long primaryKey;
-
+  
   @Required
   private String offerId;
   
   @Required
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne(cascade = CascadeType.PERSIST)
   private Student student;
   
-  @Required
   @OneToOne(cascade = CascadeType.ALL)
   private Book book;
   
@@ -39,7 +38,7 @@ public class Offer extends Model {
   public String toString() {
     return String.format("[Offer %s]", this.offerId);
   }
-  
+
   public Long getPrimaryKey() {
     return primaryKey;
   }

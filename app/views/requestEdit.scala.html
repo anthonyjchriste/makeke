@@ -1,0 +1,57 @@
+@(primaryKey : Long, requestForm : Form[models.Request], bookForm : Form[models.Book]) 
+
+@import helper._ 
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) }
+
+@makeRadio(value : String) = {
+    @defining(bookForm.field("condition").value()) { selected =>
+        @if(selected.equals(value)) {
+            <label class="radio inline" for="radio">
+                <input type="radio" value="@value" name="condition" checked="true">
+                <span>@value</span> 
+            </label>    
+        } else {
+            <label class="radio inline" for="radio">
+                <input type="radio" value="@value" name="condition">
+                <span>@value</span> 
+            </label>
+        }
+    }
+}
+
+@main("Edit Request") {
+    <div class="container">
+        <div class="row">
+            <div class="span3">
+                @form(routes.Request.update(primaryKey), 'class -> "well well-small", 'id -> "details-form") {
+                    <input type="hidden" name="student" value='@session.get("connected")' />
+                    @inputText(requestForm("requestId"), '_label -> "", 'placeholder -> "Request ID", '_showConstraints -> false)
+                    @inputText(bookForm("bookId"), '_label -> "", 'placeholder -> "Book ID", '_showConstraints -> false)
+                    @inputText(bookForm("name"), '_label -> "", 'placeholder -> "Title")
+                    @inputText(bookForm("edition"), '_label -> "", 'placeholder -> "Edition")
+                    @inputText(bookForm("isbn"), '_label -> "", 'placeholder -> "ISBN")
+                    <div class="input-prepend input-append">
+                        <span class="add-on">$</span>
+                        <input name="price" type="text" class="input-medium" value='@bookForm.field("price").value()' placeholder="Target Price">
+                        <span class="add-on">.00</span> 
+                    </div>
+                    <div class="control-group" id="conditionWell">
+                        <label class="control-label">Condition</label>
+                        <div class="controls">
+                            @makeRadio("Good")
+                            @makeRadio("Poor")
+                            @makeRadio("Fair")
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls" id="form-buttons">    
+                          <a href="@routes.RequestsAndOffers.index()" id="cancel" class="btn btn-info pull-right">Cancel</a>
+                          <a href="@routes.Request.delete(primaryKey)" id="delete" class="btn btn-danger pull-right">Delete</a>         
+                          <input id="createRequest" type="submit" value="Save" class="btn btn-primary pull-right">  
+                        </div>
+                     </div>
+                }
+            </div>
+        </div>
+    </div>
+}

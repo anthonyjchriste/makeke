@@ -1,0 +1,55 @@
+@(requests : List[models.Request], offers : List[models.Offer]) 
+
+@main("Manage Requests / Offers") {
+    <div class="container">
+        <div class="row">
+        
+            <!-- Requests -->
+            <div class="span6">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr><th></th>
+                            <th>Active Requests (@requests.size()) <a href="@routes.Request.create()" class="btn pull-right btn-primary">New Request</a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if(requests.size() == 0) {
+                            <tr><td></td><td>No Requests</td></tr>
+                        }
+                        @for(request <- requests) {
+                            <tr>
+                                <td class="smallCover"><img src="http://covers.openlibrary.org/b/isbn/@request.getBook().getIsbn()-M.jpg"></td>
+                                <td>@request.getBook().getName() <a href="@routes.Request.edit(request.getPrimaryKey)" class="btn pull-right btn-success">Manage</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Offers -->
+            <div class="span6">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr><th></th>
+                            <th>Active Offers (@offers.size()) <a href="@routes.Offer.create()" class="btn pull-right btn-primary">New Offer</a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if(offers.size() == 0) {
+                            <tr><td></td><td>No Offers</td></tr>
+                        }
+                        @for(offer <- offers) {
+                            <tr>
+                                <td class="smallCover"><img src="http://covers.openlibrary.org/b/isbn/@offer.getBook().getIsbn()-M.jpg"></td>
+                                <td>@offer.getBook().getName() <a href="@routes.Offer.edit(offer.getPrimaryKey())" class="btn pull-right btn-success">Manage</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+    </div>
+}

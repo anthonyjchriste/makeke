@@ -1,15 +1,59 @@
-@(title: String)(content: Html)
+@(title : String)(content : Html)
 
 <!DOCTYPE html>
 
 <html>
     <head>
         <title>@title</title>
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-        <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
+    	<link rel="stylesheet" media="screen" href="@routes.WebJarAssets.at(WebJarAssets.locate("css/bootstrap.min.css"))">
+        <link rel="stylesheet" media="screen" href="@routes.WebJarAssets.at(WebJarAssets.locate("css/bootstrap-responsive.min.css"))">
+    	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+    	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/makeke.css")">
+        <script type="text/javascript" src='@routes.Assets.at("javascripts/jquery-1.9.0.min.js")'></script>
+        <script type="text/javascript" src='@routes.Assets.at("javascripts/makeke.js")'></script>
+    	<link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.ico")">
+    	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/google-bootstrap.css")">
     </head>
     <body>
-        @content
+    <div class="navbar navbar-fixed-top">
+          <div class="navbar-inner">
+            <div class="container-fluid">
+              <a class="brand" href="#">Makeke</a>
+              <div class="navbar-content">
+                <ul class="nav">
+                  <li>
+                    <a href="@routes.Application.index()">Home</a> 
+                  </li>
+                  <li>
+                    <a href="#">Book Explorer</a> 
+                  </li>
+                  <li class="active">
+                    <a href="@routes.RequestsAndOffers.index()">My Offers / Requests</a> 
+                  </li>
+                </ul>
+              </div>
+              @if(session.get("connected") == null) {
+                <form action="@routes.Student.login()" class="form-horizontal" id="formLogin">
+                    <div class="control-group">
+                        <div class="controls">
+                            <button type="submit" class="btn pull-right btn-primary">Login</button>
+                            <input name="password" type="password" class="pull-right input-medium" placeholder="Password">
+                            <input name="email" type="text" class="pull-right input-medium" placeholder="E-Mail">
+                        </div>
+                    </div> 
+                </form>
+              } else {
+                <a href="@routes.Student.logout()" class="btn pull-right btn-info" id="logout">Logout</a>
+                <a class="btn pull-right btn-info">My Account</a>
+              }
+            </div>
+          </div>
+        </div>
+    	<div class="container" id="top">
+    		<div class="page-header">
+        		<h1>@title</h1>
+      		</div>
+        	@content
+       	</div>
     </body>
 </html>

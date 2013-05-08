@@ -9,6 +9,7 @@ create table book (
   name                      varchar(255),
   condition                 varchar(255),
   isbn                      varchar(255),
+  edition                   varchar(255),
   price                     bigint,
   constraint pk_book primary key (primary_key))
 ;
@@ -35,6 +36,8 @@ create table student (
   first_name                varchar(255),
   last_name                 varchar(255),
   email                     varchar(255),
+  password                  varchar(255),
+  password_hash             varbinary(255),
   constraint pk_student primary key (primary_key))
 ;
 

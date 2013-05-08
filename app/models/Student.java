@@ -8,10 +8,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import play.Logger;
 import play.data.format.Formatters;
 import play.data.validation.Constraints.Email;
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
+import utils.Password;
 
 @Entity
 public class Student extends Model {
@@ -32,6 +34,12 @@ public class Student extends Model {
   @Email
   private String email;
   
+  
+  private String password;
+  
+  @Required
+  private byte[] passwordHash;
+  
   @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
   private List<Offer> offers = new ArrayList<>();
   
@@ -43,22 +51,6 @@ public class Student extends Model {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
-    
-    Formatters.register(models.Student.class, new Formatters.SimpleFormatter<models.Student>() {
-      @Override
-      public models.Student parse(String text, Locale locale) throws ParseException {
-        models.Student student = models.Student.find().where().eq("studentId", text).findUnique();
-        if (student == null) {
-          throw new ParseException("Could not find matching Student", 0);
-        }
-        return student;
-      }
-
-      @Override
-      public String print(models.Student t, Locale locale) {
-        return t.getStudentId();
-      }
-    });
   }
   
   public static Finder<Long, Student> find() {
@@ -109,6 +101,19 @@ public class Student extends Model {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+  
+  public void setPassword(String password) {
+    this.passwordHash = Password.hash(password);
+    this.password = "";
+  }
+  
+  public String getPassword() {
+    return this.password;
+  }
+  
+  public byte[] getPasswordHash() {
+    return this.passwordHash;
   }
 
   public List<Offer> getOffers() {

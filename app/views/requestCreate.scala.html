@@ -1,0 +1,80 @@
+@(requestForm : Form[models.Request], books : List[models.Book]) 
+
+@import helper._ 
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) }
+ 
+@main("Create New Request") {
+    <div class="container">
+        <div class="row">
+            <div class="span3">
+                @form(routes.Request.save(), 'class -> "well well-small", 'id -> "details-form") {
+                    Request Information
+                    <input type="hidden" name="student" value='@session.get("connected")' />
+                    @inputText(requestForm("requestId"), '_label -> "", 'placeholder -> "Request ID", '_showConstraints -> false)
+                    @inputText(requestForm("bookId"), '_label -> "", 'placeholder -> "Book ID")
+                    @inputText(requestForm("name"), '_label -> "", 'placeholder -> "Title", 'id -> "name")
+                    @inputText(requestForm("edition"), '_label -> "", 'placeholder -> "Edition", 'id -> "edition")
+                    @inputText(requestForm("isbn"), '_label -> "", 'placeholder -> "ISBN", 'id -> "isbn")
+                    <div class="input-prepend input-append">
+                        <span class="add-on">$</span>
+                        <input name = "price" type="text" class="input-medium" placeholder="Target Price">
+                        <span class="add-on">.00</span> 
+                    </div>
+                    <div class="control-group" id="conditionWell">
+                        <label class="control-label">Condition</label>
+                        <div class="controls">
+                            <label class="radio inline" for="radio">
+                                <input type="radio" value="Good" name="condition">
+                                <span>Good</span> 
+                            </label>
+                            <label class="radio inline" for="radio">
+                                <input type="radio" value="Fair" name="condition">
+                                <span>Fair</span> 
+                            </label>
+                          <label class="radio inline" for="radio">
+                            <input type="radio" value="Poor" name="condition">
+                            <span>Poor</span>
+                          </label>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls" id="form-buttons">
+                          <a href="@routes.RequestsAndOffers.index()" id="cancel" class="btn btn-info pull-right">Cancel</a>       
+                          <input id="createRequest" type="submit" value="Create Request" class="btn btn-primary pull-right">  
+                        </div>
+                     </div>
+                }
+            </div>
+            <div class="span9">
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Cover Image</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for(i <- books.indices) {
+                <tr>
+                    <td class="smallCover">
+                        <img src="http://covers.openlibrary.org/b/isbn/@books.get(i).getIsbn()-M.jpg">
+                    </td>
+                    <td>
+                        <dl class="dl-horizontal">
+                            <dt>Title</dt>
+                            <dd id="name@{i + 1}">@books.get(i).getName()</dd>
+                            <dt>Edition</dt>
+                            <dd id="edition@{i + 1}">@books.get(i).getEdition()</dd>
+                            <dt>ISBN</dt>
+                            <dd id="isbn@{i + 1}">@books.get(i).getIsbn()</dd>
+                        </dl>
+                        <a href="#" id="@{i + 1}" class="btn btn-primary pull-right selectable">Select</a>
+                    </td>
+                </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+        </div>
+    </div>
+}

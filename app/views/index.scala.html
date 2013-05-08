@@ -1,7 +1,11 @@
-@(message: String)
-
-@main("Welcome to Play 2.1") {
-    
-    @play20.welcome(message, style = "Java")
-    
+@main("Welcome to Makeke") {
+    <div class="container" id="top">
+      <div class="hero-unit hidden-phone">
+        <h1>Welcome to Makeke</h1>
+        <p>A new approach for exchanging text books within a small community.</p>
+        <p>
+          <a href="@routes.Student.create()" class="btn btn-large btn-inverse" href="#"><span class="btn-label">Sign Up Today!</span></a> 
+        </p>
+      </div>
+    </div>
 }

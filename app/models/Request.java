@@ -19,10 +19,9 @@ public class Request extends Model {
   private String requestId;
   
   @Required
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne(cascade = CascadeType.PERSIST)
   private Student student;
   
-  @Required
   @OneToOne(cascade = CascadeType.ALL)
   private Book book;
   

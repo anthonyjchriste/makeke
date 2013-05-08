@@ -11,23 +11,47 @@ GET     /books/:bookId              controllers.Book.details(bookId: String)
 POST    /books                      controllers.Book.newBook()
 DELETE  /books/:bookId              controllers.Book.delete(bookId: String)
 
+# Login / Logout
+GET		/student/login				controllers.Student.login()
+GET		/student/logout				controllers.Student.logout()
+
+# Add Student
+GET		/student/create				controllers.Student.create()
+POST	/student					controllers.Student.save()
+
 # Students
 GET     /students                   controllers.Student.index()
 GET     /students/:studentId        controllers.Student.details(studentId: String)
-POST    /students                   controllers.Student.newStudent()
 DELETE  /students/:studentId        controllers.Student.delete(studentId: String)
 
-# Offers
-GET     /offers                     controllers.Offer.index()
-GET     /offers/:offerId            controllers.Offer.details(offerId: String)
-POST    /offers                     controllers.Offer.newOffer()
-DELETE  /offers/:offerId            controllers.Offer.delete(offerId: String)
+# Add Request
+GET     /request/create            	controllers.Request.create()
+POST	/request					controllers.Request.save()
 
-# Requests
-GET     /requests                   controllers.Request.index()
-GET     /requests/:requestId        controllers.Request.details(requestId: String)
-POST    /requests                   controllers.Request.newRequest()
-DELETE  /requests/:requestId        controllers.Request.delete(requestId: String)
+# Edit Request
+GET     /request/:primaryKey        controllers.Request.edit(primaryKey: Long)
+POST	/request/:primaryKey		controllers.Request.update(primaryKey: Long)
+
+# Delete Request
+GET		/request/:primaryKey/delete	controllers.Request.delete(primaryKey: Long)
+
+# Add Offer
+GET     /offer/create               controllers.Offer.create()
+POST	/offer						controllers.Offer.save()
+
+# Edit Offer
+GET     /offer/:primaryKey        	controllers.Offer.edit(primaryKey: Long)
+POST	/offer/:primaryKey			controllers.Offer.update(primaryKey: Long)
+
+# Delete Offer
+GET		/offer/:primaryKey/delete	controllers.Offer.delete(primaryKey: Long)
+GET     /offers/:offerId        	controllers.Offer.details(offerId: String)
+
+
+
+# Manage Offers and Requests
+GET		/manage						controllers.RequestsAndOffers.index()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET     /webjars/*file              controllers.WebJarAssets.at(file)
