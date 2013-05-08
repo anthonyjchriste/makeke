@@ -1,6 +1,21 @@
-# Routes
-# This file defines all application routes (Higher priority routes first)
-# ~~~~
+#
+# This file is part of Makeke.
+#
+# Makeke is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Makeke is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Makeke.  If not, see <http://www.gnu.org/licenses/>.
+# 
+# Copyright (C) Anthony Christe 2013 
+#
 
 # Home page
 GET     /                           controllers.Application.index()
@@ -8,22 +23,17 @@ GET     /                           controllers.Application.index()
 # Books
 GET     /books                      controllers.Book.index()
 POST	/books/filter				controllers.Book.filter()
-GET     /books/:bookId              controllers.Book.details(bookId: String)
-POST    /books                      controllers.Book.newBook()
-DELETE  /books/:bookId              controllers.Book.delete(bookId: String)
-
-# Login / Logout
-GET		/student/login				controllers.Student.login()
-GET		/student/logout				controllers.Student.logout()
 
 # Add Student
 GET		/student/create				controllers.Student.create()
 POST	/student					controllers.Student.save()
 
-# Students
-GET     /students                   controllers.Student.index()
-GET     /students/:studentId        controllers.Student.details(studentId: String)
-DELETE  /students/:studentId        controllers.Student.delete(studentId: String)
+# Student Login / Logout
+GET     /student/login              controllers.Student.login()
+GET     /student/logout             controllers.Student.logout()
+
+# Manage Requests and Offers
+GET     /manage                     controllers.RequestsAndOffers.index()
 
 # Add Request
 GET     /request/create            	controllers.Request.create()
@@ -46,13 +56,7 @@ POST	/offer/:primaryKey			controllers.Offer.update(primaryKey: Long)
 
 # Delete Offer
 GET		/offer/:primaryKey/delete	controllers.Offer.delete(primaryKey: Long)
-GET     /offers/:offerId        	controllers.Offer.details(offerId: String)
 
-
-
-# Manage Offers and Requests
-GET		/manage						controllers.RequestsAndOffers.index()
-
-# Map static resources from the /public folder to the /assets URL path
+# Map static resources
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 GET     /webjars/*file              controllers.WebJarAssets.at(file)
