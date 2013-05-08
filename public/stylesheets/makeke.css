@@ -6,7 +6,12 @@
   margin-top: 10px;      
 }
 
-/* --- Login/Logout ---*/
+/* --- Main Page --- */
+#description {
+	padding-right: 140px;
+}
+
+/* --- Login/Logout --- */
 #formLogin input {
   margin-right: 10px;
 }

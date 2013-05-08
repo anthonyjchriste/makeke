@@ -1,11 +1,20 @@
 @main("Welcome to Makeke") {
     <div class="container" id="top">
       <div class="hero-unit hidden-phone">
-        <h1>Welcome to Makeke</h1>
-        <p>A new approach for exchanging text books within a small community.</p>
-        <p>
-          <a href="@routes.Student.create()" class="btn btn-large btn-inverse" href="#"><span class="btn-label">Sign Up Today!</span></a> 
-        </p>
+        <table>
+            <tr>
+                <td id="description">
+                    <h1>Welcome to Makeke</h1>
+                    <p>A new approach for exchanging text books within a small community.</p>
+                    <p>
+                      <a href="@routes.Student.create()" class="btn btn-large btn-inverse" href="#"><span class="btn-label">Sign Up Today!</span></a> 
+                    </p>
+                </td>
+                <td>
+                    <img src='@routes.Assets.at("images/books.png")' />
+                </td>
+            </tr>
+        </table>           
       </div>
     </div>
 }
