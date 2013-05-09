@@ -28,25 +28,25 @@
             @form(routes.Request.save(), 'class -> "well well-small", 'id -> "details-form") {
             Request Information <input type="hidden" name="student"
                 value='@session.get("connected")' /> @inputText(requestForm("requestId"), '_label
-            -> "", 'placeholder -> "Request ID", '_showConstraints -> false)
-            @inputText(requestForm("bookId"), '_label -> "", 'placeholder -> "Book ID")
+            -> "", 'placeholder -> "Request ID", '_showConstraints -> false, 'id -> "requestId")
+            @inputText(requestForm("bookId"), '_label -> "", 'placeholder -> "Book ID", 'id -> "bookId")
             @inputText(requestForm("name"), '_label -> "", 'placeholder -> "Title", 'id -> "name")
             @inputText(requestForm("edition"), '_label -> "", 'placeholder -> "Edition", 'id ->
             "edition") @inputText(requestForm("isbn"), '_label -> "", 'placeholder -> "ISBN", 'id ->
             "isbn")
             <div class="input-prepend input-append">
                 <span class="add-on">$</span> <input name="price" type="text" class="input-medium"
-                    placeholder="Target Price"> <span class="add-on">.00</span>
+                    placeholder="Target Price" id="price"> <span class="add-on">.00</span>
             </div>
             <div class="control-group" id="conditionWell">
                 <label class="control-label">Condition</label>
                 <div class="controls">
                     <label class="radio inline" for="radio"> <input type="radio"
-                        value="Good" name="condition"> <span>Good</span>
+                        value="Good" name="condition" id="Good"> <span>Good</span>
                     </label> <label class="radio inline" for="radio"> <input type="radio"
-                        value="Fair" name="condition"> <span>Fair</span>
+                        value="Fair" name="condition" id="Fair"> <span>Fair</span>
                     </label> <label class="radio inline" for="radio"> <input type="radio"
-                        value="Poor" name="condition"> <span>Poor</span>
+                        value="Poor" name="condition" id="Poor"> <span>Poor</span>
                     </label>
                 </div>
             </div>

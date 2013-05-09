@@ -26,12 +26,12 @@
     @defining(bookForm.field("condition").value()) { selected =>
         @if(selected != null && selected.equals(value)) {
             <label class="radio inline" for="radio">
-                <input type="radio" value="@value" name="condition" checked="true">
+                <input type="radio" value="@value" name="condition" checked="true" id="@value">
                 <span>@value</span> 
             </label>    
         } else {
             <label class="radio inline" for="radio">
-                <input type="radio" value="@value" name="condition">
+                <input type="radio" value="@value" name="condition" id="@value">
                 <span>@value</span> 
             </label>
         }
@@ -44,14 +44,14 @@
             <div class="span3">
                 @form(routes.Request.update(primaryKey), 'class -> "well well-small", 'id -> "details-form") {
                     <input type="hidden" name="student" value='@session.get("connected")' />
-                    @inputText(requestForm("requestId"), '_label -> "", 'placeholder -> "Request ID", '_showConstraints -> false)
-                    @inputText(bookForm("bookId"), '_label -> "", 'placeholder -> "Book ID", '_showConstraints -> false)
-                    @inputText(bookForm("name"), '_label -> "", 'placeholder -> "Title")
-                    @inputText(bookForm("edition"), '_label -> "", 'placeholder -> "Edition")
-                    @inputText(bookForm("isbn"), '_label -> "", 'placeholder -> "ISBN")
+                    @inputText(requestForm("requestId"), '_label -> "", 'placeholder -> "Request ID", '_showConstraints -> false, 'id -> "requestId")
+                    @inputText(bookForm("bookId"), '_label -> "", 'placeholder -> "Book ID", '_showConstraints -> false, 'id -> "bookId")
+                    @inputText(bookForm("name"), '_label -> "", 'placeholder -> "Title", 'id -> "name")
+                    @inputText(bookForm("edition"), '_label -> "", 'placeholder -> "Edition", 'id -> "edition")
+                    @inputText(bookForm("isbn"), '_label -> "", 'placeholder -> "ISBN", 'id -> "isbn")
                     <div class="input-prepend input-append">
                         <span class="add-on">$</span>
-                        <input name="price" type="text" class="input-medium" value='@bookForm.field("price").value()' placeholder="Target Price">
+                        <input name="price" type="text" class="input-medium" value='@bookForm.field("price").value()' placeholder="Target Price" id="price">
                         <span class="add-on">.00</span> 
                     </div>
                     <div class="control-group" id="conditionWell">
@@ -66,7 +66,7 @@
                         <div class="controls" id="form-buttons">    
                           <a href="@routes.RequestsAndOffers.index()" id="cancel" class="btn btn-info pull-right">Cancel</a>
                           <a href="@routes.Request.delete(primaryKey)" id="delete" class="btn btn-danger pull-right">Delete</a>         
-                          <input id="createRequest" type="submit" value="Save" class="btn btn-primary pull-right">  
+                          <input id="editRequest" type="submit" value="Save" class="btn btn-primary pull-right">  
                         </div>
                      </div>
                 }

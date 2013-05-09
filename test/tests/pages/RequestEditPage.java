@@ -22,12 +22,12 @@ package tests.pages;
 import org.fluentlenium.core.FluentPage;
 import org.openqa.selenium.WebDriver;
 
-public class StudentEditPage extends FluentPage {
+public class RequestEditPage extends FluentPage {
   private String url;
 
-  public StudentEditPage(WebDriver webDriver, int port, Long primaryKey) {
+  public RequestEditPage(WebDriver webDriver, int port, Long primaryKey) {
     super(webDriver);
-    this.url = "http://localhost:" + port + "/student/" + primaryKey.toString();
+    this.url = "http://localhost:" + port + "/request/" + primaryKey.toString();
   }
 
   public String getUrl() {
@@ -35,16 +35,24 @@ public class StudentEditPage extends FluentPage {
   }
 
   public void isAt() {
-    assert (title().equals("Edit Student Information"));
+    assert (title().equals("Edit Request"));
+  }
+
+  // For testing purposes, use the same string for both ID and name.
+  public void editRequest(String requesttId, String bookId, String name, String edition,
+      String isbn, String price, String condition) {
+    fill("#requestId").with(requesttId);
+    fill("#bookId").with(bookId);
+    fill("#name").with(name);
+    fill("#edition").with(edition);
+    fill("#isbn").with(isbn);
+    fill("#price").with(price);
+    click("#" + condition);
+    submit("#editRequest");
   }
   
-  public void editStudent(String studentId, String firstName, String lastName, String email,
-      String password) {
-    fill("#studentId").with(studentId);
-    fill("#firstName").with(firstName);
-    fill("#lastName").with(lastName);
-    fill("#email").with(email);
-    fill("#password").with(password);
-    submit("#editStudent");
+  public void deleteRequest() {
+    click("#delete");
   }
+
 }
