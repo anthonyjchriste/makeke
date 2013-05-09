@@ -26,11 +26,11 @@
     <div class="container">
         <div class="row">
             @form(routes.Student.save(), 'class -> "well well-small") {
-                @inputText(studentForm("studentId"), '_label -> "", 'placeholder -> "Student ID")
-                @inputText(studentForm("firstName"), '_label -> "", 'placeholder -> "First Name")
-                @inputText(studentForm("lastName"), '_label -> "", 'placeholder -> "Last Name")
-                @inputText(studentForm("email"), '_label -> "", 'placeholder -> "Email")
-                @inputPassword(studentForm("password"), '_label -> "", 'placeholder -> "Password")
+                @inputText(studentForm("studentId"), '_label -> "", 'placeholder -> "Student ID", 'id -> "studentId")
+                @inputText(studentForm("firstName"), '_label -> "", 'placeholder -> "First Name", 'id -> "firstName")
+                @inputText(studentForm("lastName"), '_label -> "", 'placeholder -> "Last Name", 'id -> "lastName")
+                @inputText(studentForm("email"), '_label -> "", 'placeholder -> "Email", 'id -> "email")
+                @inputPassword(studentForm("password"), '_label -> "", 'placeholder -> "Password", 'id -> "password")
                 <div class="control-group">
                     <div class="controls">
                         <input id="createAccount" type="submit" value="Create Account" class="btn btn-primary" />

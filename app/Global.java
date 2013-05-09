@@ -36,7 +36,7 @@ public class Global extends GlobalSettings {
   @Override
   public void onStart(Application app) {
     Logger.info("Performing onStart operations");
-    
+
     Formatters.register(models.Student.class, new Formatters.SimpleFormatter<models.Student>() {
       /**
        * Matches a student based on the studentId.
@@ -49,7 +49,7 @@ public class Global extends GlobalSettings {
         }
         return student;
       }
-      
+
       /**
        * Prints a student object as the studentId.
        */
@@ -58,7 +58,7 @@ public class Global extends GlobalSettings {
         return t.getStudentId();
       }
     });
-    
+
     Formatters.register(models.Book.class, new Formatters.SimpleFormatter<models.Book>() {
       /**
        * Matches a book on the bookId.
@@ -71,7 +71,7 @@ public class Global extends GlobalSettings {
         }
         return book;
       }
-      
+
       /**
        * Prints a book object as the bookId.
        */

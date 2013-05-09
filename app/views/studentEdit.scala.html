@@ -27,11 +27,11 @@
         <div class="row">
             <div class="span3">
                 @form(routes.Student.update(primaryKey), 'class -> "well well-small", 'id -> "details-form") {
-                    @inputText(studentForm("studentId"), '_label -> "", 'placeholder -> "Student ID", '_showConstraints -> false)
-                    @inputText(studentForm("firstName"), '_label -> "", 'placeholder -> "First Name", '_showConstraints -> false)
-                    @inputText(studentForm("lastName"), '_label -> "", 'placeholder -> "Last Name", '_showConstraints -> false)
-                    @inputText(studentForm("email"), '_label -> "", 'placeholder -> "Email", '_showConstraints -> false)
-                    @inputPassword(studentForm("password"), '_label -> "", 'placeholder -> "Password", '_showConstraints -> false)
+                    @inputText(studentForm("studentId"), '_label -> "", 'placeholder -> "Student ID", '_showConstraints -> false, 'id -> "studentId")
+                    @inputText(studentForm("firstName"), '_label -> "", 'placeholder -> "First Name", '_showConstraints -> false, 'id -> "firstName")
+                    @inputText(studentForm("lastName"), '_label -> "", 'placeholder -> "Last Name", '_showConstraints -> false, 'id -> "lastName")
+                    @inputText(studentForm("email"), '_label -> "", 'placeholder -> "Email", '_showConstraints -> false, 'id -> "email")
+                    @inputPassword(studentForm("password"), '_label -> "", 'placeholder -> "Password", '_showConstraints -> false, 'id -> "password")
                     
                     <div class="control-group">
                         <div class="controls" id="form-buttons">    

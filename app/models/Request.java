@@ -16,7 +16,7 @@
  *  
  *  Copyright (C) Anthony Christe 2013 
  */
- 
+
 package models;
 
 import javax.persistence.CascadeType;
@@ -39,26 +39,26 @@ public class Request extends Model {
 
   @Id
   private Long primaryKey;
-  
+
   @Required
   private String requestId;
-  
+
   @Required
   @ManyToOne(cascade = CascadeType.PERSIST)
   private Student student;
-  
+
   @OneToOne(cascade = CascadeType.ALL)
   private Book book;
-  
+
   public Request(String requestId, Book book) {
     this.setRequestId(requestId);
     this.setBook(book);
   }
-  
+
   public static Finder<Long, Request> find() {
     return new Finder<>(Long.class, Request.class);
   }
-  
+
   @Override
   public String toString() {
     return String.format("[Request %s]", this.requestId);
@@ -95,5 +95,5 @@ public class Request extends Model {
   public void setBook(Book book) {
     this.book = book;
   }
-  
+
 }

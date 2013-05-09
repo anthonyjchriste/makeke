@@ -16,7 +16,7 @@
  *  
  *  Copyright (C) Anthony Christe 2013 
  */
- 
+
 package utils;
 
 import models.Student;
@@ -30,21 +30,22 @@ import play.mvc.Controller;
 public class User {
   /**
    * Get the Student that is currently logged in.
+   * 
    * @return The currently logged in student or null if no one is logged in.
    */
   public static Student getStudent() {
-    String studentId = Controller.session().get("connected"); 
-    if(studentId == null) {
+    String studentId = Controller.session().get("connected");
+    if (studentId == null) {
       return null;
     }
-    
+
     // Note this is an ugly hack to get around needing to be logged in during testing.
     // In the tests, a session variable is passed with the value test, this should return
     // a valid student so that controllers believe that a student is logged in.
-    if(studentId.equals("_tester")) {
+    if (studentId.equals("_tester")) {
       return new Student("_tester", "firstName", "lastName", "email@email.com");
     }
-    
+
     return Student.find().where().eq("studentId", studentId).findUnique();
   }
 }

@@ -16,7 +16,7 @@
  *  
  *  Copyright (C) Anthony Christe 2013 
  */
- 
+
 package utils;
 
 import java.security.MessageDigest;
@@ -30,19 +30,20 @@ import java.security.NoSuchAlgorithmException;
 public class Password {
   /**
    * Hashes a password using SHA-256.
+   * 
    * @param password The plain-text ofthe password.
    * @return The hashed bytes of the password.
    */
   public static byte[] hash(String password) {
-      try {
-        MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        digest.update(password.getBytes());
-        return digest.digest();
-      }
-      catch (NoSuchAlgorithmException e) {
-        e.printStackTrace();
-        return new byte[0];
-      }
-    
+    try {
+      MessageDigest digest = MessageDigest.getInstance("SHA-256");
+      digest.update(password.getBytes());
+      return digest.digest();
+    }
+    catch (NoSuchAlgorithmException e) {
+      e.printStackTrace();
+      return new byte[0];
+    }
+
   }
 }

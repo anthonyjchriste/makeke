@@ -16,7 +16,7 @@
  *  
  *  Copyright (C) Anthony Christe 2013 
  */
- 
+
 package models;
 
 import javax.persistence.CascadeType;
@@ -37,16 +37,16 @@ public class Book extends Model {
 
   @Id
   private Long primaryKey;
-  
+
   @Required
   private String bookId;
-  
+
   @OneToOne(mappedBy = "book", cascade = CascadeType.ALL)
   private Request request;
-  
+
   @OneToOne(mappedBy = "book", cascade = CascadeType.ALL)
   private Offer offer;
-  
+
   private String name;
   private String condition;
   private String isbn;
@@ -58,20 +58,20 @@ public class Book extends Model {
     this.name = name;
     this.edition = edition;
     this.condition = condition;
-    this.isbn= isbn;
+    this.isbn = isbn;
     this.price = price;
   }
-  
+
   public static Finder<Long, Book> find() {
     return new Finder<>(Long.class, Book.class);
   }
-  
+
   @Override
   public String toString() {
     return String.format("[Book %s %s %s %s %d]", this.bookId, this.name, this.condition,
         this.isbn, this.price);
   }
-  
+
   public Long getPrimaryKey() {
     return primaryKey;
   }
@@ -111,11 +111,11 @@ public class Book extends Model {
   public void setName(String name) {
     this.name = name;
   }
-  
+
   public String getEdition() {
     return edition;
   }
-  
+
   public void setEdition(String edition) {
     this.edition = edition;
   }

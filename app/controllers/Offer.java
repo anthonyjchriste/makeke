@@ -103,13 +103,13 @@ public class Offer extends Controller {
       return ok(error.render("You must be logged in to do that.",
           "Please login or create an account."));
     }
-    
+
     models.Offer offer = models.Offer.find().byId(primaryKey);
-    
-    if(offer == null) {
+
+    if (offer == null) {
       return notFound("Invalid primary key");
     }
-    
+
     Form<models.Offer> offerForm = form(models.Offer.class).fill(offer);
     Form<models.Book> bookForm = form(models.Book.class).fill(offer.getBook());
     return ok(offerEdit.render(primaryKey, offerForm, bookForm));
@@ -158,11 +158,11 @@ public class Offer extends Controller {
     }
 
     models.Offer offer = models.Offer.find().byId(primaryKey);
-    
-    if(offer != null) {
+
+    if (offer != null) {
       offer.delete();
     }
-    
+
     return redirect(routes.RequestsAndOffers.index());
   }
 }

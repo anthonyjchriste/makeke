@@ -16,7 +16,7 @@
  *  
  *  Copyright (C) Anthony Christe 2013 
  */
- 
+
 package tests;
 
 import static org.junit.Assert.assertEquals;
@@ -52,32 +52,32 @@ public class ModelTest {
   public void testModel() {
     // Create a book to be used in subsequent requests
     Book book = new Book("Book-01", "name", "edition", "condition", "isbn", 1L);
-    
+
     // Associate the book with an Offer and a Request
     Offer offer = new Offer("Offer-01", book);
     Request request = new Request("Request-01", book);
     book.setOffer(offer);
     book.setRequest(request);
-    
+
     // Associate the Request and the Offer with a Student
     Student student = new Student("Student-01", "firstName", "lastName", "email");
     student.getOffers().add(offer);
     student.getRequests().add(request);
     offer.setStudent(student);
     request.setStudent(student);
-    
+
     // Persist everything to the db
     student.save();
     offer.save();
     request.save();
     book.save();
-    
+
     // Grab the items back from the db
     List<Student> students = Student.find().findList();
     List<Offer> offers = Offer.find().findList();
     List<Request> requests = Request.find().findList();
     List<Book> books = Book.find().findList();
-    
+
     // Check to make sure all lists contain 1 item
     assertEquals("Checking students", students.size(), 1);
     assertEquals("Checkling offers", offers.size(), 1);

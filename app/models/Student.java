@@ -16,7 +16,7 @@
  *  
  *  Copyright (C) Anthony Christe 2013 
  */
- 
+
 package models;
 
 import java.util.ArrayList;
@@ -41,42 +41,41 @@ public class Student extends Model {
 
   @Id
   private Long primaryKey;
-  
+
   @Required
   private String studentId;
-  
+
   @Required
   private String firstName;
-  
+
   @Required
   private String lastName;
-  
+
   @Email
   private String email;
-  
-  
+
   private String password;
-  
+
   @Required
   private byte[] passwordHash;
-  
+
   @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
   private List<Offer> offers = new ArrayList<>();
-  
+
   @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
   private List<Request> requests = new ArrayList<>();
-  
+
   public Student(String studentId, String firstName, String lastName, String email) {
     this.studentId = studentId;
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
   }
-  
+
   public static Finder<Long, Student> find() {
     return new Finder<>(Long.class, Student.class);
   }
-  
+
   @Override
   public String toString() {
     return String.format("%s %s (%s)", this.getFirstName(), this.getLastName(), this.getEmail());
@@ -121,16 +120,16 @@ public class Student extends Model {
   public void setEmail(String email) {
     this.email = email;
   }
-  
+
   public void setPassword(String password) {
     this.passwordHash = Password.hash(password);
     this.password = "";
   }
-  
+
   public String getPassword() {
     return this.password;
   }
-  
+
   public byte[] getPasswordHash() {
     return this.passwordHash;
   }

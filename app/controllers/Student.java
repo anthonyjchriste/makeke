@@ -1,5 +1,5 @@
 /*
- * This file is part of Makeke.
+  * This file is part of Makeke.
  *
  *  Makeke is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -101,9 +101,10 @@ public class Student extends Controller {
     session().clear();
     return redirect(routes.Application.index());
   }
-  
+
   /**
    * Displays a form to allow editing of an existing account.
+   * 
    * @param primaryKey The primary key associated with the currently logged in student.
    * @return A rendered form to edit student information.
    */
@@ -112,19 +113,20 @@ public class Student extends Controller {
       return ok(error.render("You must be logged in to do that.",
           "Please login or create an account."));
     }
-    
+
     models.Student student = models.Student.find().byId(primaryKey);
-    
-    if(student == null) {
+
+    if (student == null) {
       return notFound("Invalid primary key");
     }
-    
+
     Form<models.Student> studentForm = form(models.Student.class).fill(student);
     return ok(studentEdit.render(primaryKey, studentForm));
   }
-  
+
   /**
    * Update current student information.
+   * 
    * @param primaryKey The primary key associated with the currently logged in student.
    * @return A redirect back to the home page.
    */
@@ -133,26 +135,26 @@ public class Student extends Controller {
       return ok(error.render("You must be logged in to do that.",
           "Please login or create an account."));
     }
-    
+
     Form<models.Student> studentForm = form(models.Student.class).bindFromRequest();
     studentForm.get().update(primaryKey);
-    
+
     return redirect(routes.Application.index());
   }
-  
+
   public static Result delete(Long primaryKey) {
     models.Student student = models.Student.find().byId(primaryKey);
-    
-    if(student != null) {
+
+    if (student != null) {
       student.delete();
     }
-    
+
     session().clear();
     return redirect(routes.Application.index());
   }
-  
+
   /**
-   * Redirects the browser to the proper student account page based on the student that is logged 
+   * Redirects the browser to the proper student account page based on the student that is logged
    * in.
    * 
    * @return A redirect to the correct account information page.
@@ -163,7 +165,7 @@ public class Student extends Controller {
       return ok(error.render("You must be logged in to do that.",
           "Please login or create an account."));
     }
-    
+
     return redirect(routes.Student.edit(student.getPrimaryKey()));
   }
 }
