@@ -66,19 +66,17 @@ public class ViewTest {
             browser.goTo(studentEditPage);
             studentEditPage.isAt();
             assertThat(studentEditPage.pageSource().contains("Student-01"));
-            
-            
+
             // Testing the edit page here as well so we don't need create create the above student
-            studentEditPage.editStudent("Student-02", "Papa", "Smurf", "psmurf@gmail.com",
-                "abc");
+            studentEditPage.editStudent("Student-02", "Papa", "Smurf", "psmurf@gmail.com", "abc");
             bookIndexPage.isAt();
             browser.goTo(studentEditPage);
-            
-            assertThat(studentEditPage.pageSource().contains("Student-02"));         
+
+            assertThat(studentEditPage.pageSource().contains("Student-02"));
           }
         });
   }
-  
+
   @Test
   public void testRequestPage() {
     running(testServer(3333, fakeApplication(inMemoryDatabase())), HTMLUNIT,
@@ -89,7 +87,7 @@ public class ViewTest {
           }
         });
   }
-  
+
   @Test
   public void testRequestCreatePage() {
     running(testServer(3333, fakeApplication(inMemoryDatabase())), HTMLUNIT,
@@ -101,18 +99,19 @@ public class ViewTest {
             studentCreatePage.isAt();
             studentCreatePage.makeNewStudent("Student-01", "Papa", "Smurf", "psmurf@gmail.com",
                 "abc");
-            
+
             RequestPage requestPage = new RequestPage(browser.getDriver(), 3333);
             RequestCreatePage requestCreatePage = new RequestCreatePage(browser.getDriver(), 3333);
             browser.goTo(requestCreatePage);
             requestCreatePage.isAt();
-            requestCreatePage.makeNewRequest("Request-01", "Book-01", "Book", "Edition", "1234", "20", "Good");
+            requestCreatePage.makeNewRequest("Request-01", "Book-01", "Book", "Edition", "1234",
+                "20", "Good");
             requestPage.isAt();
             assertThat(requestPage.pageSource().contains("Book"));
           }
         });
   }
-  
+
   @Test
   public void testRequestEditPage() {
     running(testServer(3333, fakeApplication(inMemoryDatabase())), HTMLUNIT,
@@ -123,30 +122,31 @@ public class ViewTest {
             studentCreatePage.isAt();
             studentCreatePage.makeNewStudent("Student-01", "Papa", "Smurf", "psmurf@gmail.com",
                 "abc");
-            
+
             RequestPage requestPage = new RequestPage(browser.getDriver(), 3333);
             RequestCreatePage requestCreatePage = new RequestCreatePage(browser.getDriver(), 3333);
             browser.goTo(requestCreatePage);
             requestCreatePage.isAt();
-            requestCreatePage.makeNewRequest("Request-01", "Book-01", "Book", "Edition", "1234", "20", "Good");
+            requestCreatePage.makeNewRequest("Request-01", "Book-01", "Book", "Edition", "1234",
+                "20", "Good");
             requestPage.isAt();
             assertThat(requestPage.pageSource().contains("Book"));
-           
+
             RequestEditPage requestEditPage = new RequestEditPage(browser.getDriver(), 3333, 1L);
             browser.goTo(requestEditPage);
             requestEditPage.isAt();
-            requestEditPage.editRequest("Request-01", "Book-01", "NewBook", "Edition", "1234", "20", "Good");
+            requestEditPage.editRequest("Request-01", "Book-01", "NewBook", "Edition", "1234",
+                "20", "Good");
             requestPage.isAt();
             assertThat(requestPage.pageSource().contains("NewBook"));
-            
+
             // Lets try deleting the request
             browser.goTo(requestEditPage);
             requestEditPage.deleteRequest();
-            
+
             assertThat(requestPage.pageSource().contains("No Requests"));
           }
         });
   }
-  
-  
+
 }

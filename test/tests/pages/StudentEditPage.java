@@ -37,7 +37,7 @@ public class StudentEditPage extends FluentPage {
   public void isAt() {
     assert (title().equals("Edit Student Information"));
   }
-  
+
   public void editStudent(String studentId, String firstName, String lastName, String email,
       String password) {
     fill("#studentId").with(studentId);

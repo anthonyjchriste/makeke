@@ -50,7 +50,7 @@ public class RequestEditPage extends FluentPage {
     click("#" + condition);
     submit("#editRequest");
   }
-  
+
   public void deleteRequest() {
     click("#delete");
   }
