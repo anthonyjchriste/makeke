@@ -41,6 +41,7 @@ import models.Student;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import controllers.routes;
 import play.mvc.Result;
 import play.test.FakeApplication;
 import play.test.FakeRequest;
@@ -247,28 +248,20 @@ private FakeApplication application;
     assertEquals("Delete missing Request also OK", SEE_OTHER, status(result));
   }
   
-  /*
+  
   @Test
   public void testStudentController() {
-    ReverseStudent reverseStudent = controllers.routes.ref.Student;
-    // Test GET /students on an empty database
-    Result result = callAction(reverseStudent.index());
-    assertTrue("Empty students", contentAsString(result).contains("No students"));
-    
-    // Test GET /students on a database containing a single student.
+    // Test getting the details of a single student
     String studentId = "Student-01";
     Student student = new Student(studentId, "firstName","lastName", "email@email.com");
     student.save();
-    result = callAction(reverseStudent.index());
+    Result result = callAction(controllers.routes.ref.Student.edit(student.getPrimaryKey()), fakeRequest().withSession("connected", "_tester"));
     assertTrue("One student", contentAsString(result).contains(studentId));
     
-    // Test GET /students/Student-01
-    result = callAction(reverseStudent.details(studentId));
-    assertTrue("Student detail", contentAsString(result).contains(studentId));
-    
-    // Test GET /students/BadStudentId and make sure we get a 404
-    result = callAction(reverseStudent.details("BadStudentId"));
+    // Test that invalid students return a not found status.
+    result = callAction(controllers.routes.ref.Student.edit(999), fakeRequest().withSession("connected", "_tester"));
     assertEquals("Student detail (bad)", NOT_FOUND, status(result));
+    
     
     // Test POST /students (with simulated, valid from data).
     Map<String, String> studentData = new HashMap<>();
@@ -276,23 +269,25 @@ private FakeApplication application;
     studentData.put("firstName", "firstName");
     studentData.put("lastName", "lastName");
     studentData.put("email", "email@email.com");
+    studentData.put("password", "password");
     FakeRequest fakeRequest = fakeRequest();
     fakeRequest.withFormUrlEncodedBody(studentData);
-    result = callAction(reverseStudent.newStudent(), fakeRequest);
-    assertEquals("Create new student", OK, status(result));
+    result = callAction(controllers.routes.ref.Student.save(), fakeRequest);
+    assertEquals("Create new student", SEE_OTHER, status(result));
+    
     
     // Test POST /studets (with simulated, invalid form data).
     fakeRequest = fakeRequest();
-    result = callAction(reverseStudent.newStudent(), fakeRequest);
-    assertEquals("Create bad student fails", BAD_REQUEST, status(result));
+    result = callAction(controllers.routes.ref.Student.save(), fakeRequest);
+    assertTrue("Create bad student fails", contentAsString(result).contains("Error"));
     
-    // Test DELETE /students/Student-01 (a valid RequestId).
-    result = callAction(reverseStudent.delete(studentId));
-    assertEquals("Delete current student OK", OK, status(result));
-    result = callAction(reverseStudent.details(studentId));
+    
+    // Test deleting a valid student
+    result = callAction(controllers.routes.ref.Student.delete(student.getPrimaryKey()), fakeRequest().withSession("connected", "_tester"));
+    assertEquals("Delete current student SEE_OTHER", SEE_OTHER, status(result));
+    result = callAction(controllers.routes.ref.Student.edit(student.getPrimaryKey()), fakeRequest().withSession("connected", "_tester"));
     assertEquals("Deleted student gone", NOT_FOUND, status(result));
-    result = callAction(reverseStudent.delete(studentId));
-    assertEquals("Delete missing student also OK", OK, status(result));
+    result = callAction(controllers.routes.ref.Student.delete(student.getPrimaryKey()), fakeRequest().withSession("connected", "_tester"));
+    assertEquals("Delete missing student also SEE_OTHER", SEE_OTHER, status(result));
   }
-  */
 }

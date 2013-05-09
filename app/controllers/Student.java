@@ -57,7 +57,7 @@ public class Student extends Controller {
     Form<models.Student> studentForm = form(models.Student.class).bindFromRequest();
 
     if (studentForm.hasErrors()) {
-      return badRequest(studentForm.toString());
+      return ok(error.render("Student form has errors", studentForm.errors().toString()));
     }
 
     models.Student student = studentForm.get();
@@ -114,6 +114,11 @@ public class Student extends Controller {
     }
     
     models.Student student = models.Student.find().byId(primaryKey);
+    
+    if(student == null) {
+      return notFound("Invalid primary key");
+    }
+    
     Form<models.Student> studentForm = form(models.Student.class).fill(student);
     return ok(studentEdit.render(primaryKey, studentForm));
   }
@@ -136,7 +141,12 @@ public class Student extends Controller {
   }
   
   public static Result delete(Long primaryKey) {
-    models.Student.find().byId(primaryKey).delete();
+    models.Student student = models.Student.find().byId(primaryKey);
+    
+    if(student != null) {
+      student.delete();
+    }
+    
     session().clear();
     return redirect(routes.Application.index());
   }
