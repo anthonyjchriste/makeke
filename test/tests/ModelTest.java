@@ -51,7 +51,7 @@ public class ModelTest {
   @Test
   public void testModel() {
     // Create a book to be used in subsequent requests
-    Book book = new Book("Book-01", "name", "condition", "isbn", 1L);
+    Book book = new Book("Book-01", "name", "edition", "condition", "isbn", 1L);
     
     // Associate the book with an Offer and a Request
     Offer offer = new Offer("Offer-01", book);

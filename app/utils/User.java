@@ -37,6 +37,14 @@ public class User {
     if(studentId == null) {
       return null;
     }
+    
+    // Note this is an ugly hack to get around needing to be logged in during testing.
+    // In the tests, a session variable is passed with the value test, this should return
+    // a valid student so that controllers believe that a student is logged in.
+    if(studentId.equals("_tester")) {
+      return new Student("_tester", "firstName", "lastName", "email@email.com");
+    }
+    
     return Student.find().where().eq("studentId", studentId).findUnique();
   }
 }

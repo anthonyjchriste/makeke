@@ -52,7 +52,7 @@ public class Book extends Controller {
           "Please login or create an account."));
     }
 
-    List<models.Book> books = models.Book.find().findList();
+    List<models.Book> books = models.Book.find().all();
     return ok(bookexplorer.render(books));
   }
 

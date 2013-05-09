@@ -25,9 +25,9 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import utils.User;
+import views.html.error;
 import views.html.requestCreate;
 import views.html.requestEdit;
-import views.html.error;
 
 /**
  * Manages the views and models of Requests.
@@ -104,6 +104,11 @@ public class Request extends Controller {
     }
 
     models.Request request = models.Request.find().byId(primaryKey);
+    
+    if(request == null) {
+      return notFound("Invalid primary key");
+    }
+    
     Form<models.Request> requestForm = form(models.Request.class).fill(request);
     Form<models.Book> bookForm = form(models.Book.class).fill(request.getBook());
     return ok(requestEdit.render(primaryKey, requestForm, bookForm));
@@ -150,8 +155,13 @@ public class Request extends Controller {
       return ok(error.render("You must be logged in to do that.",
           "Please login or create an account."));
     }
-
-    models.Request.find().byId(primaryKey).delete();
+    
+    models.Request request = models.Request.find().byId(primaryKey);
+    
+    if(request != null) {
+      request.delete();
+    }
+    
     return redirect(routes.RequestsAndOffers.index());
   }
 }

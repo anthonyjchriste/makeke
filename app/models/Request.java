@@ -51,8 +51,8 @@ public class Request extends Model {
   private Book book;
   
   public Request(String requestId, Book book) {
-    this.requestId = requestId;
-    this.book = book;
+    this.setRequestId(requestId);
+    this.setBook(book);
   }
   
   public static Finder<Long, Request> find() {

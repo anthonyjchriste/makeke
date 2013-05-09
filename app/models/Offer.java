@@ -51,8 +51,8 @@ public class Offer extends Model {
   private Book book;
   
   public Offer(String offerId, Book book) {
-    this.offerId = offerId;
-    this.book = book;
+    this.setOfferId(offerId);
+    this.setBook(book);
   }
   
   public static Finder<Long, Offer> find() {

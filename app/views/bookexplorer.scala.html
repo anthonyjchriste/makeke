@@ -64,6 +64,12 @@
                 </tr>
             </thead>
             <tbody>
+                @if(books.size() == 0) {
+                    <tr>
+                        <td>No Books</td>
+                        <td></td>
+                    </tr>
+                }
                 @for(book <- books) {
                     <tr>
                         <td class="cover">
