@@ -24,13 +24,21 @@ GET     /                           controllers.Application.index()
 GET     /books                      controllers.Book.index()
 POST	/books/filter				controllers.Book.filter()
 
+# Student Login / Logout
+GET     /student/login              controllers.Student.login()
+GET     /student/logout             controllers.Student.logout()
+
 # Add Student
 GET		/student/create				controllers.Student.create()
 POST	/student					controllers.Student.save()
 
-# Student Login / Logout
-GET     /student/login              controllers.Student.login()
-GET     /student/logout             controllers.Student.logout()
+# Edit Student
+GET		/student/account			controllers.Student.account()
+GET		/student/:primaryKey		controllers.Student.edit(primaryKey: Long)
+POST	/student/:primaryKey		controllers.Student.update(primaryKey: Long)
+
+# Delete Student
+GET		/student/:primaryKey/delete	controllers.Student.delete(primaryKey: Long)
 
 # Manage Requests and Offers
 GET     /manage                     controllers.RequestsAndOffers.index()

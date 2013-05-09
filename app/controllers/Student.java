@@ -26,8 +26,10 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import utils.Password;
+import utils.User;
 import views.html.error;
 import views.html.studentCreate;
+import views.html.studentEdit;
 
 /**
  * Manages the creation of new student accounts.
@@ -98,5 +100,60 @@ public class Student extends Controller {
   public static Result logout() {
     session().clear();
     return redirect(routes.Application.index());
+  }
+  
+  /**
+   * Displays a form to allow editing of an existing account.
+   * @param primaryKey The primary key associated with the currently logged in student.
+   * @return A rendered form to edit student information.
+   */
+  public static Result edit(Long primaryKey) {
+    if (User.getStudent() == null) {
+      return ok(error.render("You must be logged in to do that.",
+          "Please login or create an account."));
+    }
+    
+    models.Student student = models.Student.find().byId(primaryKey);
+    Form<models.Student> studentForm = form(models.Student.class).fill(student);
+    return ok(studentEdit.render(primaryKey, studentForm));
+  }
+  
+  /**
+   * Update current student information.
+   * @param primaryKey The primary key associated with the currently logged in student.
+   * @return A redirect back to the home page.
+   */
+  public static Result update(Long primaryKey) {
+    if (User.getStudent() == null) {
+      return ok(error.render("You must be logged in to do that.",
+          "Please login or create an account."));
+    }
+    
+    Form<models.Student> studentForm = form(models.Student.class).bindFromRequest();
+    studentForm.get().update(primaryKey);
+    
+    return redirect(routes.Application.index());
+  }
+  
+  public static Result delete(Long primaryKey) {
+    models.Student.find().byId(primaryKey).delete();
+    session().clear();
+    return redirect(routes.Application.index());
+  }
+  
+  /**
+   * Redirects the browser to the proper student account page based on the student that is logged 
+   * in.
+   * 
+   * @return A redirect to the correct account information page.
+   */
+  public static Result account() {
+    models.Student student = User.getStudent();
+    if (student == null) {
+      return ok(error.render("You must be logged in to do that.",
+          "Please login or create an account."));
+    }
+    
+    return redirect(routes.Student.edit(student.getPrimaryKey()));
   }
 }
