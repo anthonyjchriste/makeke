@@ -64,7 +64,7 @@
                 </tr>
             </thead>
             <tbody>
-                @if(books.size() == 0) {
+                @if(books.size() == 0 || books == null) {
                     <tr>
                         <td>No Books</td>
                         <td></td>

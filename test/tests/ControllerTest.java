@@ -35,7 +35,9 @@ import static play.test.Helpers.stop;
 import java.util.HashMap;
 import java.util.Map;
 import models.Book;
+import models.Offer;
 import models.Request;
+import models.Student;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -80,9 +82,7 @@ private FakeApplication application;
     request.save();
     
     result = callAction(controllers.routes.ref.Request.edit(request.getPrimaryKey()), fakeRequest().withSession("connected", "_tester"));
-    //System.out.println(contentAsString(result));
     assertTrue("One book", contentAsString(result).contains(isbn));
-    
     
     // Test that the created book can be retrieved.
     result = callAction(controllers.routes.ref.Request.edit(request.getPrimaryKey()), fakeRequest().withSession("connected", "_tester"));
@@ -114,7 +114,7 @@ private FakeApplication application;
     result = callAction(controllers.routes.ref.Request.save(), fakeRequest);
     assertTrue("Create bad book fails", contentAsString(result).contains("Error"));
     
-    // Test DELETE /books/book-01 (a valid BookId).
+    // Test deleting a book.
     result = callAction(controllers.routes.ref.Request.delete(request.getPrimaryKey()), fakeRequest().withSession("connected", "_tester"));
     assertEquals("Delete current Book OK", SEE_OTHER, status(result));
     result = callAction(controllers.routes.ref.Request.edit(request.getPrimaryKey()), fakeRequest().withSession("connected", "_tester"));
@@ -123,56 +123,72 @@ private FakeApplication application;
     assertEquals("Delete missing Book also OK", SEE_OTHER, status(result));
   }
   
-  /*
+  
   @Test
   public void testOfferController() {
-    // Test GET /offers on an empty database
-    Result result = callAction(controllers.routes.ref.Offer.index());
-    assertTrue("Empty offers", contentAsString(result).contains("No offers"));
+    // Test finding an offer on an empty database.
+    Result result = callAction(controllers.routes.ref.RequestsAndOffers.index(), fakeRequest().withSession("connected", "_tester"));
+    assertTrue("Empty offers", contentAsString(result).contains("No Offers"));
     
-    // Test GET /offers on a database containing a single offer.
+    // Save an offer and make sure it shows up in results.
     String offerId = "Offer-01";
-    Offer offer = new Offer(offerId, new Book("Book-01", "name", "condition", "isbn", 1L));
+    String isbn = "1234";
+    Student student = new Student("Student-01", "firstName", "lastName", "email@email.com");
+    Book book = new Book("Book-01", "name", "edition", "condition", isbn, 1L);
+    Offer offer = new Offer(offerId, book);
+    book.setOffer(offer);
+    offer.setBook(book);
+    offer.setStudent(student);
+    student.getOffers().add(offer);
+    student.save();
     offer.save();
-    result = callAction(controllers.routes.ref.Offer.index());
-    assertTrue("One offer", contentAsString(result).contains(offerId));
+    book.save();
+    result = callAction(controllers.routes.ref.Book.index(), fakeRequest().withSession("connected", "_tester"));
+    assertTrue("One offer", contentAsString(result).contains(isbn));
     
     // Test GET /offers/Offer-01
-    result = callAction(controllers.routes.ref.Offer.details(offerId));
+    result = callAction(controllers.routes.ref.Offer.edit(offer.getPrimaryKey()), fakeRequest().withSession("connected", "_tester"));
     assertTrue("Offer detail", contentAsString(result).contains(offerId));
     
     // Test GET /offers/BadOfferId and make sure we get a 404
-    result = callAction(controllers.routes.ref.Offer.details("BadOfferId"));
+    result = callAction(controllers.routes.ref.Offer.edit(999), fakeRequest().withSession("connected", "_tester"));
     assertEquals("Offer detail (bad)", NOT_FOUND, status(result));
     
     // Test POST /offers (with simulated, valid from data).
     Map<String, String> offerData = new HashMap<>();
-    Book book = new Book("Book-02", "name", "condition", "isbn", 1L);
-    Student student = new Student("Student-01", "firstName", "lastName", "email@email.com");
-    book.save();
-    student.save();
-    offerData.put("offerId", "Offer-02");
-    offerData.put("book", "Book-02");
+    Map<String, String> bookData = new HashMap<>();
+    //Book book = new Book("Book-02", "name", "edition", "condition", "isbn", 1L);
+    //Student student = new Student("Student-01", "firstName", "lastName", "email@email.com");
+    //book.save();
+    //student.save();
+    bookData.put("bookId", "Book-02");
+    bookData.put("name", "name");
+    bookData.put("condition", "condition");
+    bookData.put("isbn", "isbn");
+    bookData.put("price", "1");
     offerData.put("student", "Student-01");
-    FakeRequest request = fakeRequest();
-    request.withFormUrlEncodedBody(offerData);
-    result = callAction(controllers.routes.ref.Offer.newOffer(), request);
+    offerData.put("requestId", "Request-01");
+    offerData.put("book", "Book-02");
+    FakeRequest request = fakeRequest().withSession("connected", "_tester");
+    request.withFormUrlEncodedBody(offerData).withFormUrlEncodedBody(bookData);
+    result = callAction(controllers.routes.ref.Offer.create(), request);
     assertEquals("Create new offer", OK, status(result));
     
     // Test POST /offers (with simulated, invalid form data).
-    request = fakeRequest();
-    result = callAction(controllers.routes.ref.Offer.newOffer(), request);
-    assertEquals("Create bad offer fails", BAD_REQUEST, status(result));
+    request = fakeRequest().withSession("connected", "_tester");
+    result = callAction(controllers.routes.ref.Offer.save(), request);
+    assertTrue("Create bad offer fails", contentAsString(result).contains("Error"));
     
     // Test DELETE /offers/offer-01 (a valid OfferId).
-    result = callAction(controllers.routes.ref.Offer.delete(offerId));
-    assertEquals("Delete current Offer OK", OK, status(result));
-    result = callAction(controllers.routes.ref.Offer.details(offerId));
+    result = callAction(controllers.routes.ref.Offer.delete(offer.getPrimaryKey()), fakeRequest().withSession("connected", "_tester"));
+    assertEquals("Delete current Offer OK", SEE_OTHER, status(result));
+    result = callAction(controllers.routes.ref.Offer.edit(offer.getPrimaryKey()), fakeRequest().withSession("connected", "_tester"));
     assertEquals("Deleted Offer gone", NOT_FOUND, status(result));
-    result = callAction(controllers.routes.ref.Offer.delete(offerId));
-    assertEquals("Delete missing Offer also OK", OK, status(result));
+    result = callAction(controllers.routes.ref.Offer.delete(offer.getPrimaryKey()), fakeRequest().withSession("connected", "_tester"));
+    assertEquals("Delete missing Offer also OK", SEE_OTHER, status(result));
   }
   
+  /*
   @Test
   public void testRequestController() {
     // Test GET /request on an empty database
