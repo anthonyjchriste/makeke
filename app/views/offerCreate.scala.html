@@ -19,7 +19,8 @@
 
 @(offerForm : Form[models.Offer], books : List[models.Book]) 
 
-@import helper._ @implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
+@import helper._ 
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
 @main("Create New Offer") {
 <div class="container">
     <div class="row">
