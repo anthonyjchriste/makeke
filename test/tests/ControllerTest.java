@@ -41,7 +41,6 @@ import models.Student;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import controllers.routes;
 import play.mvc.Result;
 import play.test.FakeApplication;
 import play.test.FakeRequest;
