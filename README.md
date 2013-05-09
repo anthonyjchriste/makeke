@@ -9,5 +9,9 @@ Makeke allows students to make offers and requests for books. All students in th
 
 The offers and requests provide information about the book such as name, condition, ISBN, market price, and asking/offering price.
 
+To see our software in action, you can watch this [screencast](http://www.youtube.com/watch?v=lNqb4rntZYU).
+
 Our data model is described below. 
 ![Makeke Entity Model](http://anthonyjchriste.files.wordpress.com/2013/04/makeke.png)
+
+For more information, please see http://anthonyjchriste.github.io/makeke/.
